@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import django_heroku
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -85,13 +86,22 @@ WSGI_APPLICATION = 'apiproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':os.path.join(BASE_DIR / 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME':os.path.join(BASE_DIR / 'db.sqlite3'),
+#     }
+# }
+DATABASES={
+    'default':{
+    'ENGINE':'django.db.backends.postgresql_psycopg2',
+    'NAME':'d7qkqpfllbfd48',
+    'USER':'birrwgvwbykqzr',
+    'PASSWORD':'1a27331bf2a51150d2fdeddc24ef3f8616284867a1c56d169e8e59beee8dd4f1',
+    'HOST':'ec2-54-172-219-6.compute-1.amazonaws.com',
+    'PORT':'5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -130,8 +140,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
+django_heroku.settings(locals())
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
